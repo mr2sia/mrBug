@@ -1,36 +1,22 @@
 import sys
-import shutil
 import json
 from jsonpath_ng.ext import parse
-import jsonpath_ng.ext as jp
-from parsel import Selector
 
-# if __name__ == "__main__":
-#     if len(sys.argv) >4 or  len(sys.argv) <4:
-#         print("Введите 3 аргумента")
-#     else:
-#         valuesPath = sys.argv[1]
-#         testsPath = sys.argv[2]
-#         reportPath = sys.argv[3]
-valuesPath = 'values.json'
-testsPath = 'tests.json'
-reportPath = 'report.json'
+if __name__ == "__main__":
+    if len(sys.argv) >4 or  len(sys.argv) <4:
+        print("Введите 3 аргумента")
+    else:
+        valuesPath = sys.argv[1]
+        testsPath = sys.argv[2]
+        reportPath = sys.argv[3]
+
 with open(valuesPath) as f: ids = json.load(f)
 with open(testsPath) as f: vals = json.load(f)
-i=0
-a = set()
+
 bnew = {}
-b = []
-v = {}
-try: 
-    while True:
-        a.add(ids['values'][i]['id'])  
-        b.append(ids['values'][i])
-        i+=1
-except:
-    print(end='')
-    for i in range(len(b)):
-        bnew[str(b[i]['id'])] = b[i]['value']
+
+for i in ids['values']:
+    bnew[str(i['id'])] = i['value']
 
 def find(collection, key):
     if isinstance(collection, dict):
